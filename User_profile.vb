@@ -5,22 +5,26 @@ Imports System.Drawing.Drawing2D
 Public Class User_profile
 
     Private Sub Form1_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
-        ' Get the client area of the form
+
         Dim rect As New Rectangle(0, 0, Me.ClientSize.Width, Me.ClientSize.Height)
 
-        ' Define the start and end colors for the gradient
-        Dim startColor As Color = Color.Gray
-        Dim endColor As Color = Color.White
+        Dim color1 As Color = Color.AliceBlue
+        Dim color2 As Color = Color.FromArgb(20, 30, 80, 225)
+        Dim color3 As Color = Color.LavenderBlush
 
-        ' Create a LinearGradientBrush
-        Using brush As New LinearGradientBrush(rect, startColor, endColor, LinearGradientMode.Horizontal)
-            ' Fill the rectangle with the gradient
+        Using brush As New LinearGradientBrush(rect, color1, color3, LinearGradientMode.Horizontal)
+            Dim colorBlend As New ColorBlend()
+
+            colorBlend.Positions = New Single() {0.0F, 0.5F, 1.0F}
+            colorBlend.Colors = New Color() {color1, color2, color3}
+
+            brush.InterpolationColors = colorBlend
+
             e.Graphics.FillRectangle(brush, rect)
         End Using
     End Sub
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        ' Redraw the form when it is resized to update the gradient
         Me.Invalidate()
     End Sub
 End Class
